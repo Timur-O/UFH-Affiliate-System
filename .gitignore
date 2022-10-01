@@ -1,0 +1,5 @@
+# Ignore IntelliJ Files
+.idea
+
+# Ignore Sensitive Files
+config.php
