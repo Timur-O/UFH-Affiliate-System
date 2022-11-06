@@ -89,7 +89,10 @@ session_start();
           <tr class="paginator">
               <td colspan="5" class="center">
                 <ul class="pagination">
-                    <?php include("pagination.php"); ?>
+                    <?php
+                        include("pagination.php");
+                        displayPagination("payouts.php");
+                    ?>
                 </ul>
               </td>
             </tr>
