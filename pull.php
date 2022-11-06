@@ -1,17 +1,8 @@
 <?php
-function execPrint($command) {
-    $result = array();
-    exec($command, $result);
-    print("<pre>");
-    foreach ($result as $line) {
-        print($line . "\n");
-    }
-    print("</pre>");
-}
 
 function verify_signature($body, $secret) {
     $headers = getallheaders();
-    return hash_equals('sha256='.hash_hmac('sha256', $body, $secret), $headers['x-hub-signature-256']);
+    return hash_equals('sha256='.hash_hmac('sha256', $body, $secret), $headers['X-Hub-Signature-256']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -22,9 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      */
     include_once('config.php');
 
-    if (verify_signature(stream_get_contents(STDIN), $github_secret_webhook)) {
-        if ($_POST['ref'] == 'refs/heads/main') {
-            execPrint("git pull");
+    $body = file_get_contents('php://input');
+
+    if (verify_signature($body, $github_secret_webhook)) {
+        if (json_decode($body, true)['ref'] == 'refs/heads/main') {
+            $output = shell_exec("git pull 2>&1");
+            echo $output;
         }
     }
 }
