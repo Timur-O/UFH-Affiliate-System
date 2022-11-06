@@ -1,15 +1,29 @@
 <?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
-    <?php include 'head.php';?>
+    <?php
+        /**
+         * Declare variables imported from config.php
+         *
+         * @var $websiteURL string The URL of the website affiliates are redirecting to
+         * @var $assetsPath string The path where the assets to help advertise can be found
+         * @var $companyName string The name of the company
+         */
+        include 'head.php';
+    ?>
+
     <title>Assets - Affiliate Panel</title>
   </head>
+
   <body>
     <!-- Include the Nav into the page -->
     <?php include 'nav.php';?>
+
     <div class="main">
       <!-- Button to show/hide menu -->
       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -27,8 +41,6 @@ session_start();
 
       <div class="row">
         <?php
-          include 'config.php';
-
           $images = glob($assetsPath . "/*.webp");
           $videos = glob($assetsPath . "/*.mp4");
           if ((sizeof($images) == 0) && (sizeof($videos) == 0)) {
@@ -76,6 +88,9 @@ session_start();
       </div>
       
     </div>
+
     <?php include 'foot.php';?>
+
   </body>
+
 </html>

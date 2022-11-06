@@ -1,5 +1,10 @@
 <?php
-include 'config.php';
+/**
+ * Declare variables imported from config.php
+ *
+ * @var $conn mysqli The MySQL Connection Variable
+ */
+include_once('config.php');
 
 $sql = "SELECT `location`, `adCode` FROM `ads`";
 $result = $conn->query($sql);

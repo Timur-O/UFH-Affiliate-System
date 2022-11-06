@@ -8,7 +8,7 @@ if (isset($_POST['newEmail'])) {
      * @var $conn mysqli The database connection variable.
      * @var $affiliateTableName string The name of the affiliate table
      */
-    include 'config.php';
+    include_once('config.php');
 
     $newEmail = $conn->real_escape_string($_POST['newEmail']);
 

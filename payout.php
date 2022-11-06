@@ -19,13 +19,12 @@ session_start();
   <body>
     <!-- Include the Nav into the page -->
     <?php include 'nav.php';?>
+
     <div class="main">
       <!-- Button to show/hide menu -->
       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
       <?php
-        include 'config.php';
-        
         $sql = "SELECT `payoutEmail` FROM `$affiliateTableName` WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
         $result = $conn->query($sql)->fetch_assoc();
         $paypalEmail = $result['payoutEmail'];
@@ -99,6 +98,9 @@ session_start();
       </div>
 
     </div>
+
     <?php include 'foot.php';?>
+
   </body>
+
 </html>

@@ -1,23 +1,24 @@
 <?php
 session_start();
-
-/**
- * Declare variables imported from config.php
- *
- * @var $conn mysqli The MySQL Connection Variable
- * @var $userTableName string The name of the table containing user information
- * @var $emailColumn string The name of the column containing email addresses
- * @var $hashPasswordColumn string The name of the column containing hashed passwords
- * @var $primaryKeyColumn int The column containing the IDs of the users
- */
-include 'config.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
   <head>
-    <?php include 'head.php';?>
+    <?php
+        /**
+         * Declare variables imported from config.php
+         *
+         * @var $conn mysqli The MySQL Connection Variable
+         * @var $userTableName string The name of the table containing user information
+         * @var $emailColumn string The name of the column containing email addresses
+         * @var $hashPasswordColumn string The name of the column containing hashed passwords
+         * @var $primaryKeyColumn int The column containing the IDs of the users
+         */
+        include 'head.php';
+    ?>
+
     <title>Login - Affiliate Panel</title>
   </head>
 
