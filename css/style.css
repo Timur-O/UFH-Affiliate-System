@@ -32,7 +32,7 @@ footer {
 }
 
 .footerlogin {
-  padding-left: 0px !important;
+  padding-left: 0 !important;
 }
 
 .rowtoppadded2 {
@@ -92,16 +92,16 @@ footer {
 
 @media only screen and (max-width: 993px) {
   .main {
-    padding-left: 0px;
+    padding-left: 0;
   }
   .sidenav-trigger {
     display: block;
   }
   footer {
-    padding-left: 0px;
+    padding-left: 0;
   }
   .rowtoppadded {
-    padding-top: 0%;
+    padding-top: 0;
   }
 }
 
@@ -110,14 +110,13 @@ footer {
   color: white;
   text-align: center;
   width: 80%;
-  margin: auto;
   padding: 0.5%;
-  -webkit-box-shadow: 0px 0px 7px 0px grey;
-  -moz-box-shadow: 0px 0px 7px 0px grey;
-  box-shadow: 0px 0px 7px 0px grey;
+  -webkit-box-shadow: 0 0 7px 0 grey;
+  -moz-box-shadow: 0 0 7px 0 grey;
+  box-shadow: 0 0 7px 0 grey;
   /* overflow-x: scroll; */
   overflow-y: hidden;
-  margin-bottom: 2%;
+  margin: auto auto 2%;
 }
 
 .announcement > h6 {

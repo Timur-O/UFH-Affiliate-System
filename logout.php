@@ -3,4 +3,3 @@
   session_destroy();
   //Redirect
   header("Location: index.php"); die();
-?>
