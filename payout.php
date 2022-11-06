@@ -91,7 +91,7 @@ session_start();
                 <ul class="pagination">
                     <?php
                         include("pagination.php");
-                        displayPagination("payouts.php");
+                        displayPagination("payout.php");
                     ?>
                 </ul>
               </td>
