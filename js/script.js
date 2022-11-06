@@ -1,3 +1,9 @@
+/**
+ * Declare "Missing Variables"
+ *
+ * @var $ JQuery
+*/
+
 // Initialize Materialize Scripts
 $(document).ready(function(){
   $('.sidenav').sidenav();
@@ -5,23 +11,23 @@ $(document).ready(function(){
 
 // Function called if AdBlock is not detected
 function adBlockNotDetected() {
-  var banners = document.getElementsByClassName("banner-funding");
-  for (var i=0;i<banners.length;i+=1){
+  const banners = document.getElementsByClassName("banner-funding");
+  for (let i = 0; i < banners.length; i += 1) {
     banners[i].style.display = 'none';
   }
-  var adContainers = document.getElementsByClassName("leaderad_container");
-  for (var i=0;i<adContainers.length;i+=1){
+  const adContainers = document.getElementsByClassName("leaderad_container");
+  for (let i = 0; i < adContainers.length; i += 1) {
     adContainers[i].style.display = 'block';
   }
 }
 // Function called if AdBlock is detected
 function adBlockDetected() {
-  var banners = document.getElementsByClassName("banner-funding");
-  for (var i=0;i<banners.length;i+=1){
+  const banners = document.getElementsByClassName("banner-funding");
+  for (let i = 0; i < banners.length; i += 1) {
     banners[i].style.display = 'block';
   }
-  var adContainers = document.getElementsByClassName("leaderad_container");
-  for (var i=0;i<adContainers.length;i+=1){
+  const adContainers = document.getElementsByClassName("leaderad_container");
+  for (let i = 0; i < adContainers.length; i += 1) {
     adContainers[i].style.display = 'none';
   }
 }

@@ -1,44 +1,59 @@
 <?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
-    <?php include 'head.php';?>
+    <?php
+        /**
+         * Declare variables imported from config.php
+         *
+         * @var $conn mysqli The MySQL Database Connection Variable
+         * @var $affiliateTableName string The name of the table containing information about affiliates
+         * @var $userTableName string The name of the table containing user information
+         * @var $primaryKeyColumn string The name of the column containing the IDs
+         * @var $currency string The currency
+         * @var $websiteURL string The URL of the website
+         */
+        include 'head.php';
+    ?>
+
     <title>Overview - Affiliate Panel</title>
   </head>
+
   <body>
     <!-- Include the Nav into the page -->
     <?php include 'nav.php';?>
+
     <div class="main">
       <!-- Button to show/hide menu -->
       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
       <?php
-        include 'config.php';
-
-        $sql = "SELECT `clicks`, `conversions`, `commissionBalance` FROM `{$affiliateTableName}` WHERE `affiliateID` = {$_SESSION['userRefCode']}";
+        $sql = "SELECT `clicks`, `conversions`, `commissionBalance` FROM `$affiliateTableName` WHERE `affiliateID` = {$_SESSION['userRefCode']}";
         $result = $conn->query($sql)->fetch_assoc();
         $numberOfClicks = $result['clicks'];
         $numberOfConversions = $result['conversions'];
         $currentCommissionValue = $result['commissionBalance'];
 
-        $sql = "UPDATE `{$userTableName}` SET `lastLogin` = now() WHERE `{$primaryKeyColumn}` = {$_SESSION['userRefCode']}";
+        $sql = "UPDATE `$userTableName` SET `lastLogin` = now() WHERE `$primaryKeyColumn` = {$_SESSION['userRefCode']}";
         $conn->query($sql) or die($conn->error);
 
         cloudflareIPRewrite();
 
         if (is_null($result)) {
-          $sql = "INSERT INTO  `{$affiliateTableName}` (`affiliateID`, `clicks`, `conversions`, `commissionBalance`, `payoutEmail`, `firstLoginIP`, `firstLoginProxyIP`, `lastLoginIP`) VALUES ({$_SESSION['userRefCode']}, 0, 0, 0, 'Please set a payout email...', '{$_SERVER['REMOTE_ADDR']}', '{$_SERVER['HTTP_X_FORWARDED_FOR']}', '{$_SERVER['REMOTE_ADDR']}')";
+          $sql = "INSERT INTO  `$affiliateTableName` (`affiliateID`, `clicks`, `conversions`, `commissionBalance`, `payoutEmail`, `firstLoginIP`, `firstLoginProxyIP`, `lastLoginIP`) VALUES ({$_SESSION['userRefCode']}, 0, 0, 0, 'Please set a payout email...', '{$_SERVER['REMOTE_ADDR']}', '{$_SERVER['HTTP_X_FORWARDED_FOR']}', '{$_SERVER['REMOTE_ADDR']}')";
           $conn->query($sql) or die($conn->error);
 
-          $sql = "SELECT `clicks`, `conversions`, `commissionBalance` FROM `{$affiliateTableName}` WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
+          $sql = "SELECT `clicks`, `conversions`, `commissionBalance` FROM `$affiliateTableName` WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
           $result = $conn->query($sql)->fetch_assoc();
           $numberOfClicks = $result['clicks'];
           $numberOfConversions = $result['conversions'];
           $currentCommissionValue = $result['commissionBalance'];
         } else {
-          $sql = "UPDATE `{$affiliateTableName}` SET `lastLoginIP` = '{$_SERVER['REMOTE_ADDR']}' WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
+          $sql = "UPDATE `$affiliateTableName` SET `lastLoginIP` = '{$_SERVER['REMOTE_ADDR']}' WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
           $conn->query($sql);
         }
         
@@ -140,7 +155,7 @@ session_start();
         <div class="col s12">
           <div class="card">
             <div class="card-content">
-              <span class="card-title">Your Refferal Link</span>
+              <span class="card-title">Your Referral Link</span>
                 <input type="text" disabled value="<?php echo $websiteURL . '?ref=' . $_SESSION['userRefCode']; ?>">
             </div>
           </div>

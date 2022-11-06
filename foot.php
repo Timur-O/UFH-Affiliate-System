@@ -1,4 +1,10 @@
 <?php
+/**
+ * Declare variables imported from config.php
+ *
+ * @var $companyName string The company name
+ * @var $affiliateTOSLink string The URL to the Affiliate TOS
+ */
 if (basename($_SERVER["SCRIPT_FILENAME"]) == 'index.php') {
   echo "<footer class='footerlogin'>";
 } else {

@@ -4,7 +4,16 @@ session_start();
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <?php include 'head.php';?>
+    <?php
+        /**
+         * Declare variables imported from config.php
+         *
+         * @var $conn mysqli The MySQL Database Connection Variable
+         * @var $affiliateTableName string The name of the table containing information about affiliates
+         * @var $payoutsTableName string The name of the table containing information about payouts
+         */
+        include 'head.php';
+    ?>
     <title>Payouts - Affiliate Panel</title>
   </head>
   <body>
@@ -17,7 +26,7 @@ session_start();
       <?php
         include 'config.php';
         
-        $sql = "SELECT `payoutEmail` FROM `{$affiliateTableName}` WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
+        $sql = "SELECT `payoutEmail` FROM `$affiliateTableName` WHERE `affiliateID` = '{$_SESSION['userRefCode']}'";
         $result = $conn->query($sql)->fetch_assoc();
         $paypalEmail = $result['payoutEmail'];
         
@@ -38,7 +47,7 @@ session_start();
     </div>
 
     <?php
-        $sql = "SELECT COUNT(*) as 'num' FROM `{$payoutsTableName}` WHERE `affiliate` = '{$_SESSION["userRefCode"]}'";
+        $sql = "SELECT COUNT(*) as 'num' FROM `$payoutsTableName` WHERE `affiliate` = '{$_SESSION["userRefCode"]}'";
         $result = $conn->query($sql)->fetch_assoc();
         $numberOfPayouts = $result['num'];
         
@@ -63,7 +72,7 @@ session_start();
           <tbody>
           <?php
             if ($numberOfPayouts > 0) {
-              $sql = "SELECT `date`, `amount` FROM `{$payoutsTableName}` WHERE `affiliate` = '{$_SESSION["userRefCode"]}' LIMIT 10 OFFSET {$offset}";
+              $sql = "SELECT `date`, `amount` FROM `$payoutsTableName` WHERE `affiliate` = '{$_SESSION["userRefCode"]}' LIMIT 10 OFFSET $offset";
               $fullResult = $conn->query($sql);
               while ($row = $fullResult->fetch_assoc()) {
                 $payoutDate = $row['date'];
@@ -81,59 +90,7 @@ session_start();
           <tr class="paginator">
               <td colspan="5" class="center">
                 <ul class="pagination">
-                  <?php 
-                    if (isset($_GET['page'])) {
-                      $pageNum = $_GET['page'];
-                      if ($pageNum > 2) {
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', ($pageNum - 1)) . '"><i class="material-icons">chevron_left</i></a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', ($pageNum - 2)) . '">' . ($pageNum - 2) . '</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', ($pageNum - 1)) . '">' . ($pageNum - 1) . '</a></li>';
-                        echo '<li class="active"><a href="payout.php?' . addQueryToURL('page', ($pageNum)) . '">' . $pageNum . '</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', ($pageNum + 1)) . '">' . ($pageNum + 1) . '</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', ($pageNum + 2)) . '">' . ($pageNum + 2) . '</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', ($pageNum + 1)) . '"><i class="material-icons">chevron_right</i></a></li>';
-                      } else if ($pageNum == 2) {
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 1) . '"><i class="material-icons">chevron_left</i></a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 1) . '">1</a></li>';
-                        echo '<li class="active"><a href="payout.php?' . addQueryToURL('page', 2) . '">2</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 3) . '">3</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 4) . '">4</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 5) . '">5</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 3) . '"><i class="material-icons">chevron_right</i></a></li>';
-                      } else {
-                        echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
-                        echo '<li class="active"><a href="payout.php?' . addQueryToURL('page', 1) . '">1</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 2) . '">2</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 3) . '">3</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 4) . '">4</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 5) . '">5</a></li>';
-                        echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 2) . '"><i class="material-icons">chevron_right</i></a></li>';
-                      }
-                    } else {
-                      echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
-                      echo '<li class="active"><a href="payout.php?' . addQueryToURL('page', 1) . '">1</a></li>';
-                      echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 2) . '">2</a></li>';
-                      echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 3) . '">3</a></li>';
-                      echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 4) . '">4</a></li>';
-                      echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 5) . '">5</a></li>';
-                      echo '<li class="waves-effect"><a href="payout.php?' . addQueryToURL('page', 2) . '"><i class="material-icons">chevron_right</i></a></li>';
-                    }
-                    function addQueryToURL($query, $queryValue) {
-                      $url = "//" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                      $url_parts = parse_url($url);
-                      if (isset($url_parts['query'])) {
-                          parse_str($url_parts['query'], $params);
-                      } else {
-                          $params = array();
-                      }
-                      
-                      $params[$query] = $queryValue;
-                      
-                      $url_parts['query'] = http_build_query($params);
-                      
-                      return $url_parts['query'];
-                    }
-                  ?>
+                    <?php include("pagination.php"); ?>
                 </ul>
               </td>
             </tr>

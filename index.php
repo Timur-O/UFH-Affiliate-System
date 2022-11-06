@@ -1,13 +1,26 @@
 <?php
 session_start();
+
+/**
+ * Declare variables imported from config.php
+ *
+ * @var $conn mysqli The MySQL Connection Variable
+ * @var $userTableName string The name of the table containing user information
+ * @var $emailColumn string The name of the column containing email addresses
+ * @var $hashPasswordColumn string The name of the column containing hashed passwords
+ * @var $primaryKeyColumn int The column containing the IDs of the users
+ */
 include 'config.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
     <?php include 'head.php';?>
     <title>Login - Affiliate Panel</title>
   </head>
+
   <body>
     <div class="loginmain">
       <div class="row rowtoppadded10">
@@ -18,7 +31,6 @@ include 'config.php';
             $emailPasswordError = "";
             
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $emailPasswordError = "";
                 $passwordValid = $emailValid = false;
 
                 if (empty($_POST["email"])) {
@@ -28,7 +40,7 @@ include 'config.php';
                   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $emailPasswordError = "Invalid email format";
                   } else {
-                    $sql = "SELECT * FROM `{$userTableName}` WHERE `{$emailColumn}` = '{$email}'";
+                    $sql = "SELECT * FROM `$userTableName` WHERE `$emailColumn` = '$email'";
                     $result = $conn->query($sql);
 
                     if (empty($result) OR $result->num_rows === 0) {
@@ -45,7 +57,7 @@ include 'config.php';
                 } else {
                   $password = test_input($_POST["password"]);
 
-                  $sql = "SELECT `{$hashPasswordColumn}` FROM `{$userTableName}` WHERE `{$emailColumn}` = '{$email}'";
+                  $sql = "SELECT `$hashPasswordColumn` FROM `$userTableName` WHERE `$emailColumn` = '$email'";
                   $result = $conn->query($sql) or die($conn->error);
                   $result = $result->fetch_assoc();
                   $hashPass = $result[$hashPasswordColumn];
@@ -59,7 +71,7 @@ include 'config.php';
                 }
 
                 if ($passwordValid && $emailValid) {
-                  $sql = "SELECT `{$primaryKeyColumn}` FROM `{$userTableName}` WHERE `{$emailColumn}` = '{$email}'";
+                  $sql = "SELECT `$primaryKeyColumn` FROM `$userTableName` WHERE `$emailColumn` = '$email'";
                   $result = $conn->query($sql) or die($conn->error);
                   $result = $result->fetch_assoc();
                   $primaryKey = $result[$primaryKeyColumn];
@@ -75,8 +87,7 @@ include 'config.php';
             function test_input($data) {
               $data = trim($data);
               $data = stripslashes($data);
-              $data = htmlspecialchars($data);
-              return $data;
+              return htmlspecialchars($data);
             }
           ?>
           
@@ -85,21 +96,28 @@ include 'config.php';
               <input id="email" type="email" class="validate" name="email">
               <label for="email">Email</label>
             </div>
+
             <div class="input-field col s12">
               <input id="password" type="password" class="validate" name="password">
               <label for="password">Password</label>
             </div>
+
             <p class="red-text"><?php echo $emailPasswordError;?></p>
             <p><a href="https://app.ultifreehosting.com/signup">No account? Create one now!</a></p>
             <p class="green-text">If you already have an Ultifree Hosting Account, you can use those login credentials.</p>
             <p class="purple-text">By logging into the affiliate dashboard, you agree to the <a target="_BLANK" href="https://ultifreehosting.com/legal/affiliateTOS">Affiliate TOS</a>.</p>
-            <div class="col s12 rowbottompadded">
+
+              <div class="col s12 rowbottompadded">
               <button class="btn waves-effect waves-light" type="Submit" name="action">Login</button>
             </div>
           </form>
+
         </div>
       </div>
     </div>
+
     <?php include 'foot.php';?>
+
   </body>
+
 </html>
