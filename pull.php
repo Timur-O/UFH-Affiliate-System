@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (json_decode($body, true)['ref'] == 'refs/heads/main') {
             $output = shell_exec("git pull 2>&1");
             echo $output;
+            echo "A";
         }
     }
 }
