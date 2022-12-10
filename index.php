@@ -17,6 +17,19 @@ session_start();
          * @var $primaryKeyColumn int The column containing the IDs of the users
          */
         include 'head.php';
+
+        if (isset($_SESSION['user'])) {
+            $sql = "SELECT `$emailColumn` FROM `$userTableName` WHERE `$primaryKeyColumn` = {$_SESSION['user']}";
+            $result = $conn->query($sql) or die($conn->error);
+            $result = $result->fetch_assoc();
+            $email = $result[$emailColumn];
+
+            $_SESSION['userRefCode'] = $_SESSION['user'];
+            $_SESSION['email'] = $email;
+
+            //Redirect
+            header("Location: overview.php"); die();
+        }
     ?>
 
     <title>Login - Affiliate Panel</title>
