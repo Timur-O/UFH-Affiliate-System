@@ -90,6 +90,7 @@ session_start();
                   $result = $result->fetch_assoc();
                   $primaryKey = $result[$primaryKeyColumn];
 
+                  $_SESSION['user'] = $primaryKey;
                   $_SESSION['userRefCode'] = $primaryKey;
                   $_SESSION['email'] = $email;
 

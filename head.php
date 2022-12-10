@@ -1,5 +1,6 @@
 <?php 
-require 'config.php'; 
+require 'config.php';
+require 'securityCheck.php';
 ?>
 
 <meta charset="utf-8">

@@ -1,9 +1,3 @@
-<?php
-if (!isset($_SESSION['userRefCode'])) {
-  header("Location: index.php"); die();
-}
-?>
-
 <!-- Nav Menu -->
 <ul id="slide-out" class="sidenav sidenav-fixed">
   <li><a href="#"><i class="material-icons">account_box</i><?php echo $_SESSION['email'];?></a></li>
