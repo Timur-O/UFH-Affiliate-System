@@ -2,4 +2,4 @@
   session_start();
   session_destroy();
   //Redirect
-  header("Location: index.php"); die();
+  header("Location: https://app.ultifreehosting.com/login.php"); die();

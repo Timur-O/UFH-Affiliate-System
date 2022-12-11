@@ -1,8 +1,6 @@
-<?php 
-require 'config.php';
-if (str_contains(__FILE__, "index") !== false) {
-    require 'securityCheck.php';
-}
+<?php
+require_once 'config.php';
+require_once 'securityCheck.php';
 ?>
 
 <meta charset="utf-8">
